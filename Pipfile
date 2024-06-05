@@ -9,6 +9,7 @@ langchain = "*"
 langchain-openai = "*"
 environs = "*"
 langchain-community = "*"
+streamlit-authenticator = "*"
 
 [dev-packages]
 

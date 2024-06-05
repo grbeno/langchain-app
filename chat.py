@@ -22,21 +22,13 @@ env.read_env()
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
 os.environ["LANGCHAIN_API_KEY"] = env.str("LANGCHAIN_API_KEY")
 
-st.info(
-    """Try an application that uses OpenAI's GPT models
-[`TechInt Copilot`](http://localhost:8502/) 
-to generate tech-interview questions and answers."""
-)
-
 ## Sidebar
 
 st.sidebar.success("OpenAI Chatbot")
 st.sidebar.divider()
 select_model = st.sidebar.selectbox("Select model", ['gpt-4o','gpt-4','gpt-3.5-turbo'])
 
-scale = [i/10 for i in range(0,10) if i != 0]
-scale.append(1)
-scale.insert(0,0)
+scale = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
 tmp = st.sidebar.select_slider(
     "Select temperature",
     options=scale,

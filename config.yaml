@@ -1,0 +1,11 @@
+credentials:
+  usernames:
+    grbeno:
+      email: bengr@example.com
+      name: beno gr
+      password: $2b$12$zEIoSRU.r4mqFHNKXafAuu/tA1YnoC62ZyeaUdviznjxHxJ41BjVu
+cookie:
+  expiry_days: 30
+  key: cookkey
+  name: langchain-test
+  
