@@ -9,6 +9,7 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_community.chat_message_histories import (
     StreamlitChatMessageHistory,
 )
+from langchain_huggingface import HuggingFaceEndpoint
 
 ## $ streamlit run app.py
 
@@ -26,7 +27,15 @@ os.environ["LANGCHAIN_API_KEY"] = env.str("LANGCHAIN_API_KEY")
 
 st.sidebar.success("OpenAI Chatbot")
 st.sidebar.divider()
-select_model = st.sidebar.selectbox("Select model", ['gpt-4o','gpt-4','gpt-3.5-turbo'])
+
+# Model selection
+select_model = st.sidebar.selectbox("Select model", 
+    ['gpt-4o',
+     'gpt-4',
+     'gpt-3.5-turbo',
+     'meta-llama/Meta-Llama-3-8B-Instruct',
+    ]
+)
 
 scale = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
 tmp = st.sidebar.select_slider(
@@ -39,15 +48,23 @@ st.sidebar.write("Selected model: " + select_model)
 st.sidebar.write("Selected temperature for GPT: " + str(tmp))
 
 ## Model - LLM
-
 model = select_model
 temperature = tmp
 
-llm = ChatOpenAI(
-    model=model,
-    temperature=temperature,
-    api_key=os.environ["OPENAI_API_KEY"]
-)
+if 'gpt' in model:
+    llm = ChatOpenAI(
+        model=model,
+        temperature=temperature,
+        api_key=os.environ["OPENAI_API_KEY"]
+    )
+else:
+    llm = HuggingFaceEndpoint(
+        repo_id=model,
+        task="text-generation",
+        max_new_tokens=100,
+        do_sample=False,
+        huggingfacehub_api_token=os.environ["HUGGINGFACE_API_KEY"],
+    )
 
 msgs = StreamlitChatMessageHistory(key="special_app_key")
 if len(msgs.messages) == 0:
@@ -91,4 +108,6 @@ if prompt := st.chat_input():
         {"messages": prompt},
         config=config,
     )
-    st.chat_message("ai").write(response.content)
+    if 'gpt' in model:
+        response = response.content
+    st.chat_message("ai").write(response)

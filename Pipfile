@@ -10,6 +10,7 @@ langchain-openai = "*"
 environs = "*"
 langchain-community = "*"
 streamlit-authenticator = "*"
+langchain-huggingface = "*"
 
 [dev-packages]
 
