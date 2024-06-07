@@ -44,7 +44,8 @@ if authentication_status:
     st.sidebar.write(f'Welcome *{username}*')
     authenticator.logout('Logout', 'sidebar')
     
-    st.sidebar.divider()
+    st.sidebar.success("Tech interviewer")
+
     model = st.sidebar.selectbox("Select model", ['gpt-4o','gpt-4','gpt-3.5-turbo'])
 
     scale = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]

@@ -5,7 +5,6 @@ from environs import Env
 from langchain_openai import ChatOpenAI
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-
 from langchain_community.chat_message_histories import (
     StreamlitChatMessageHistory,
 )
@@ -26,11 +25,11 @@ os.environ["LANGCHAIN_API_KEY"] = env.str("LANGCHAIN_API_KEY")
 ## Sidebar
 
 st.sidebar.success("OpenAI Chatbot")
-st.sidebar.divider()
 
 # Model selection
 select_model = st.sidebar.selectbox("Select model", 
-    ['gpt-4o',
+    [
+     'gpt-4o',
      'gpt-4',
      'gpt-3.5-turbo',
      'meta-llama/Meta-Llama-3-8B-Instruct',
