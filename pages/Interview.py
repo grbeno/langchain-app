@@ -15,6 +15,11 @@ from langchain_community.chat_message_histories import (
 import yaml
 from yaml.loader import SafeLoader
 
+## Style
+# with open('style.css') as f:
+#     css = f.read()
+# st.write(f'<style>{css}</style>', unsafe_allow_html=True)
+
 ## $ streamlit run app.py
 
 with open('config.yaml') as file:
@@ -43,6 +48,7 @@ if authentication_status:
     
     st.sidebar.write(f'Welcome *{username}*')
     authenticator.logout('Logout', 'sidebar')
+    st.sidebar.divider()
     
     st.sidebar.success("Tech interviewer")
 

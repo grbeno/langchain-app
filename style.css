@@ -1,0 +1,38 @@
+
+[data-testid="stAppViewContainer"] {
+    background: black;
+    color: rgb(238, 226, 226);
+    h1, h2, h3, p {
+        color: rgb(217, 220, 230);
+    }
+}
+
+[data-testid="stSidebarContent"] {
+    background: #141313;
+    span {
+        color: rgb(241, 239, 239);
+    }
+}
+
+[data-testid="stBottomBlockContainer"] {
+    background: rgb(14, 17, 23);
+    color: rgb(241, 239, 239);
+}
+
+[data-testid="stHeader"] {
+    background: rgb(14, 17, 23);
+    color:white;
+}
+
+[class="st-emotion-cache-uhkwx6 ea3mdgi6"] {
+    background: rgb(14, 17, 23);
+}
+
+[data-baseweb="base-input"] {
+    background: white;
+}
+
+[data-testid="baseButton-secondary"] {
+    background: rgb(14, 17, 23);
+    color: white;
+}

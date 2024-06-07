@@ -22,6 +22,11 @@ env.read_env()
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
 os.environ["LANGCHAIN_API_KEY"] = env.str("LANGCHAIN_API_KEY")
 
+## Style
+# with open('style.css') as f:
+#     css = f.read()
+# st.write(f'<style>{css}</style>', unsafe_allow_html=True)
+
 ## Sidebar
 
 st.sidebar.success("OpenAI Chatbot")
@@ -71,7 +76,7 @@ if len(msgs.messages) == 0:
 
 ## Prompt template - role
 
-system_prompt = """ You are a helpful assistant. Answer all questions to the best of your ability. """
+system_prompt = """ You are a helpful assistant. Answer all questions to the best of your ability in. """
 
 prompt = ChatPromptTemplate.from_messages(
     [

@@ -5,6 +5,7 @@ __pycache__/
 
 # Custom
 test.py
+build_the_app.txt
 
 # C extensions
 *.so

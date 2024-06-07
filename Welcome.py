@@ -1,5 +1,4 @@
 import streamlit as st
-from style import css
 
 st.set_page_config(
     page_title="Welcome",
@@ -7,7 +6,11 @@ st.set_page_config(
 )
 
 ## Style
-st.write(css, unsafe_allow_html=True)
+# with open('style.css') as f:
+#     css = f.read()
+# st.write(f'<style>{css}</style>', unsafe_allow_html=True)
+
+## Content
 
 st.write("# Welcome to Streamlit! 👋")
 
