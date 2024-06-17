@@ -1,10 +1,10 @@
-# https://python.langchain.com/v0.1/docs/integrations/memory/streamlit_chat_message_history/
-# https://github.com/langchain-ai/streamlit-agent/blob/main/streamlit_agent/basic_memory.py
+## https://python.langchain.com/v0.1/docs/integrations/memory/streamlit_chat_message_history/
+## https://github.com/langchain-ai/streamlit-agent/blob/main/streamlit_agent/basic_memory.py
+## $ streamlit run <app_name>.py
 
 import os
 
 import streamlit as st
-from streamlit_authenticator import Authenticate
 from environs import Env
 from langchain_openai import ChatOpenAI
 from langchain_core.runnables.history import RunnableWithMessageHistory
@@ -12,41 +12,32 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_community.chat_message_histories import (
     StreamlitChatMessageHistory,
 )
-import yaml
-from yaml.loader import SafeLoader
+from auth import auth
+
+
+# Run authentication first
+authenticator = auth()
+login = authenticator.login('main', fields = {'Form name': 'Login'})
+name, authentication_status, username = login
 
 ## Style
 # with open('style.css') as f:
 #     css = f.read()
 # st.write(f'<style>{css}</style>', unsafe_allow_html=True)
 
-## $ streamlit run app.py
-
-with open('config.yaml') as file:
-    config = yaml.load(file, Loader=SafeLoader)
-
-authenticator = Authenticate(
-    config['credentials'],
-    config['cookie']['name'],
-    config['cookie']['key'],
-    config['cookie']['expiry_days'],
-)
-
-name, authentication_status, username = authenticator.login('main', fields = {'Form name': 'Login'})
-
 ## Environment variables
-
 env = Env()
 env.read_env()
 
 ## Langsmith
-
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
 os.environ["LANGCHAIN_API_KEY"] = env.str("LANGCHAIN_API_KEY")
 
+## Content
+## Check if the user is authenticated
 if authentication_status:
 
-    st.sidebar.write(f'Welcome *{username}*')
+    st.sidebar.write(f'Welcome *{username}*', '👋')
     authenticator.logout('Logout', 'sidebar')
     st.sidebar.divider()
     
@@ -81,7 +72,6 @@ if authentication_status:
     level = st.sidebar.selectbox("Level", ['senior','mid','junior'])
 
     ## Model - LLM
-
     model = "gpt-4o"
     temperature = tmp
 
@@ -111,9 +101,6 @@ if authentication_status:
     chain = prompt | llm
 
     ## Message history
-
-    #store = {}
-
     with_message_history = RunnableWithMessageHistory(
         chain,
         lambda session_id: msgs,
@@ -122,7 +109,7 @@ if authentication_status:
     )
 
     ## Streamlit interface
-
+    
     for msg in msgs.messages:
         st.chat_message(msg.type).write(msg.content)
 
