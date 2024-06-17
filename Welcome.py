@@ -1,9 +1,9 @@
 import streamlit as st
 
 st.set_page_config(
-    page_title="Welcome",
-    page_icon="👋",
-)
+        page_title="Welcome",
+        page_icon="👋",
+    )
 
 ## Style
 # with open('style.css') as f:
@@ -31,3 +31,4 @@ st.markdown(
     - Explore a [New York City rideshare dataset](https://github.com/streamlit/demo-uber-nyc-pickups)
 """
 )
+

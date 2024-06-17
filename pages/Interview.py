@@ -45,7 +45,7 @@ os.environ["LANGCHAIN_TRACING_V2"] = "true"
 os.environ["LANGCHAIN_API_KEY"] = env.str("LANGCHAIN_API_KEY")
 
 if authentication_status:
-    
+
     st.sidebar.write(f'Welcome *{username}*')
     authenticator.logout('Logout', 'sidebar')
     st.sidebar.divider()
@@ -91,7 +91,7 @@ if authentication_status:
         api_key=os.environ["OPENAI_API_KEY"]
     )
 
-    msgs = StreamlitChatMessageHistory(key="special_app_key")
+    msgs = StreamlitChatMessageHistory(key="special_interview_app_key")
     if len(msgs.messages) == 0:
         msgs.add_ai_message("In which topic do you want to generate interview task? Select the technology, topic and the level from the sidebar! You can also select the model and temperature for the GPT model.")
 
@@ -104,7 +104,7 @@ if authentication_status:
         [
             ("system", system_prompt),
             MessagesPlaceholder(variable_name="history"),
-            ("human", "{messages}"),
+            ("user", "{messages}"),
         ]
     )
 
@@ -112,7 +112,7 @@ if authentication_status:
 
     ## Message history
 
-    store = {}
+    #store = {}
 
     with_message_history = RunnableWithMessageHistory(
         chain,
@@ -136,29 +136,29 @@ if authentication_status:
         st.session_state.disabled = True
 
     if get_question := st.button("Generate Interview", use_container_width=True, on_click=disable, disabled=st.session_state.disabled):
-        st.chat_message("human").write(prompt)
+        st.chat_message("user").write(prompt)
         st.divider()
         config = {"configurable": {"session_id": "task"}}
         response = with_message_history.invoke(
             {"messages": prompt},
             config=config,
         )
-        st.chat_message("ai").write(response.content)
+        st.chat_message("interviewer").write(response.content)
 
     if st.session_state.disabled:
         if get_solution := st.button("Solve the task", use_container_width=True):
             solution = "Solve the task!"
-            st.chat_message("human").write(solution)
+            st.chat_message("user").write(solution)
             st.divider()
             config = {"configurable": {"session_id": "solution"}}
             response2 = with_message_history.invoke(
                 {"messages": solution},
                 config=config,
             )
-            st.chat_message("ai").write(response2.content)
+            st.chat_message("interviewer").write(response2.content)
 
-elif authentication_status == False:
-    st.error('Username/password is incorrect')
-elif authentication_status == None:
-    st.warning('Please enter your username and password')
+    elif authentication_status == False:
+        st.error('Username/password is incorrect')
+    elif authentication_status == None:
+        st.warning('Please enter your username and password')
 

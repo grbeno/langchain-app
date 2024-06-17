@@ -90,7 +90,7 @@ chain = prompt | llm
 
 ## Message history
 
-store = {}
+#store = {}
 
 with_message_history = RunnableWithMessageHistory(
     chain,
