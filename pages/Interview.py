@@ -115,14 +115,16 @@ if authentication_status:
 
     prompt = f"Genarate an interview programming task related to {tech_fw}/{topic} in {level}-level!"
 
-    if "disabled" not in st.session_state:
-        st.session_state.disabled = False
+    ## Generate interview task
+    
+    if "generate" not in st.session_state:
+        st.session_state.generate = False
 
     # Disable the submit button after it is clicked
-    def disable():
-        st.session_state.disabled = True
+    def disable_generate():
+        st.session_state.generate = True
 
-    if get_question := st.button("Generate Interview", use_container_width=True, on_click=disable, disabled=st.session_state.disabled):
+    if get_question := st.button("Generate Interview", use_container_width=True, on_click=disable_generate, disabled=st.session_state.generate):
         st.chat_message("user").write(prompt)
         st.divider()
         config = {"configurable": {"session_id": "task"}}
@@ -132,8 +134,16 @@ if authentication_status:
         )
         st.chat_message("interviewer").write(response.content)
 
-    if st.session_state.disabled:
-        if get_solution := st.button("Solve the task", use_container_width=True):
+    ## Solve the task
+    
+    if "solution" not in st.session_state:
+        st.session_state.solution = False
+    
+    def disable_solution():
+        st.session_state.solution = True  
+    
+    if st.session_state.generate:
+        if get_solution := st.button("Solve the task", use_container_width=True, on_click=disable_solution, disabled=st.session_state.solution):
             solution = "Solve the task!"
             st.chat_message("user").write(solution)
             st.divider()
@@ -143,6 +153,7 @@ if authentication_status:
                 config=config,
             )
             st.chat_message("interviewer").write(response2.content)
+            st.success("Refresh the page to generate a new task!")
 
     elif authentication_status == False:
         st.error('Username/password is incorrect')
