@@ -1,6 +1,7 @@
 ## https://python.langchain.com/v0.1/docs/integrations/memory/streamlit_chat_message_history/
 ## https://github.com/langchain-ai/streamlit-agent/blob/main/streamlit_agent/basic_memory.py
 ## $ streamlit run <app_name>.py
+## deploy -> https://streamlit.io/cloud
 
 import os
 

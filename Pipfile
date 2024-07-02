@@ -11,6 +11,7 @@ environs = "*"
 langchain-community = "*"
 streamlit-authenticator = "*"
 langchain-huggingface = "*"
+langchain-anthropic = "*"
 
 [dev-packages]
 

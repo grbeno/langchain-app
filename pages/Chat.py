@@ -1,10 +1,14 @@
 ## $ streamlit run <app_name>.py
+## deploy -> https://streamlit.io/cloud
+
+## https://api.python.langchain.com/en/latest/chat_models/langchain_anthropic.chat_models.ChatAnthropic.html
 
 import os
 
 import streamlit as st
 from environs import Env
 from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_community.chat_message_histories import (
@@ -48,6 +52,7 @@ if authentication_status:
         'gpt-4o',
         'gpt-4',
         'gpt-3.5-turbo',
+        'claude-3-5-sonnet-20240620',
         'meta-llama/Meta-Llama-3-8B-Instruct',
         ]
     )
@@ -72,11 +77,22 @@ if authentication_status:
             temperature=temperature,
             api_key=os.environ["OPENAI_API_KEY"]
         )
+    elif 'claude' in model:
+        llm = ChatAnthropic(
+            model=model,
+            temperature=0,
+            #max_tokens=512,
+            timeout=None,
+            max_retries=2,
+            api_key=os.environ["ANTHROPIC_API_KEY"],
+            # base_url="...",
+            # other params...
+        )
     else:
         llm = HuggingFaceEndpoint(
             repo_id=model,
             task="text-generation",
-            max_new_tokens=100,
+            #max_new_tokens=512,
             do_sample=False,
             huggingfacehub_api_token=os.environ["HUGGINGFACE_API_KEY"],
         )
