@@ -12,6 +12,7 @@ langchain-community = "*"
 streamlit-authenticator = "*"
 langchain-huggingface = "*"
 langchain-anthropic = "*"
+certifi = "*"
 
 [dev-packages]
 
